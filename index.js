@@ -7,7 +7,7 @@ const productroutes = require('./routes/productroute')
 const bodyparser = require('body-parser')
 const path = require('path');
 const app = express();
-const port =4000;
+const port = process.env.port || 4000;
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=> console.log("mongoDB connected success"))
@@ -20,8 +20,8 @@ app.use('/firm', firmroutes)
 app.use('/product', productroutes)
 app.use('/uploads',express.static('uploads'));
 
-app.use("/home",(req,res)=>{
-    res.send("hii")
+app.use("/",(req,res)=>{
+    res.send("<h1>hii</h1>")
 })
 app.listen(port, ()=>{
     console.log(`server runs on ${port}`);
