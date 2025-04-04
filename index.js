@@ -1,5 +1,4 @@
 const express = require('express');
-require('dotenv').config();
 const mongoose = require('mongoose')
 const vendorrouter = require('./routes/vendorroutes')
 const firmroutes = require('./routes/firmroutes')
@@ -7,7 +6,10 @@ const productroutes = require('./routes/productroute')
 const bodyparser = require('body-parser')
 const path = require('path');
 const app = express();
+const cors = require('cors')
 const port = process.env.port || 4000;
+require('dotenv').config();
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=> console.log("mongoDB connected success"))
@@ -20,9 +22,6 @@ app.use('/firm', firmroutes)
 app.use('/product', productroutes)
 app.use('/uploads',express.static('uploads'));
 
-app.use("/",(req,res)=>{
-    res.send("<h1>hii</h1>")
-})
 app.listen(port, ()=>{
     console.log(`server runs on ${port}`);
 }) 
